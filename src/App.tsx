@@ -4,10 +4,10 @@ import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
 import Integration from './components/Integration';
 import './index.css'; 
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  // Functions for handling modal state
+
   const handleRequestDemo = () => {
     console.log("Request Demo button clicked");
     setIsModalOpen(true);
@@ -17,7 +17,7 @@ function App() {
     console.log("Close button clicked");
     setIsModalOpen(false);
   };
-  
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -50,29 +50,38 @@ function App() {
         </div>
       </footer>
 
-      {/* Modal for Waiting List */}
+      {/* Modal with Embedded Google Form */}
       {isModalOpen && (
-        <div className="modal-overlay fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="modal-content bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold mb-4">Join the Waiting List</h2>
-            <form action="https://forms.gle/qVBsGKigcsbHk5yt9" method="POST" target="_blank">
-              <label className="block mb-2">
-                Name:
-                <input type="text" name="entry.905690855" required className="w-full border rounded p-2" />
-              </label>
-              <label className="block mb-2">
-                Email:
-                <input type="email" name="entry.1764187529" required className="w-full border rounded p-2" />
-              </label>
-              <label className="block mb-2">
-                Company:
-                <input type="text" name="entry.1201369684" className="w-full border rounded p-2" />
-              </label>
-              <div className="flex justify-end space-x-2 mt-4">
-                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">Join</button>
-                <button type="button" onClick={handleCloseModal} className="px-4 py-2 bg-gray-500 text-white rounded">Close</button>
-              </div>
-            </form>
+        <div className="modal-overlay fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="modal-content bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto relative">
+            {/* Close Button as an "X" at the Top Right */}
+            <button 
+              onClick={handleCloseModal} 
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              aria-label="Close"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-xl font-semibold mb-4 text-center">Join the Waiting List</h2>
+
+            {/* Embed Google Form using iframe */}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: `
+                  <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSeu_H9vLP9HZQ61KSMeoDEzmOQ-UOh6bh1AGIQlawNpEmUSPA/viewform?embedded=true"
+                    width="100%" 
+                    height="700" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0"
+                    style="border: none;">
+                    Loading…
+                  </iframe>
+                `,
+              }}
+            />
           </div>
         </div>
       )}

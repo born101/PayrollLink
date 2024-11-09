@@ -9,12 +9,10 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleRequestDemo = () => {
-    console.log("Request Demo button clicked");
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    console.log("Close button clicked");
     setIsModalOpen(false);
   };
 
@@ -53,16 +51,7 @@ function App() {
       {/* Modal with Embedded Google Form */}
       {isModalOpen && (
         <div className="modal-overlay fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-          <div className="modal-content bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto relative">
-            {/* Close Button as an "X" at the Top Right */}
-            <button 
-              onClick={handleCloseModal} 
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              aria-label="Close"
-            >
-              &times;
-            </button>
-
+          <div className="modal-content bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-semibold mb-4 text-center">Join the Waiting List</h2>
 
             {/* Embed Google Form using iframe */}
@@ -82,6 +71,13 @@ function App() {
                 `,
               }}
             />
+
+            {/* Close Button */}
+            <div className="flex justify-end mt-4">
+              <button onClick={handleCloseModal} className="px-4 py-2 bg-gray-500 text-white rounded">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

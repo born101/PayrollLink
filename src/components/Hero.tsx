@@ -2,27 +2,20 @@ import { useState } from 'react';
 import { ArrowRight, CheckCircle2, Zap, Building, ClipboardList } from 'lucide-react';
 
 export default function Hero() {
-  // State to control the visibility of the demo request modal
-  const [isDemoModalOpen, setDemoModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
 
-  // Function to handle "Get Started" button click
-  const handleGetStartedClick = () => {
-    console.log("Get Started button clicked");
-    // Add your desired functionality here, e.g., redirect to sign-up page
-    // window.location.href = "/signup";
+  const openDemoModal = () => {
+    setModalTitle('Request a Demo');
+    setModalOpen(true);
   };
 
-  // Function to handle "Request Demo" button click
-  const handleRequestDemoClick = () => {
-    console.log("Request Demo button clicked");
-    // Open the demo request modal
-    setDemoModalOpen(true);
+  const openGetStartedModal = () => {
+    setModalTitle('Get Started Free');
+    setModalOpen(true);
   };
 
-  // Function to close the demo modal
-  const closeDemoModal = () => {
-    setDemoModalOpen(false);
-  };
+  const closeModal = () => setModalOpen(false);
 
   const benefits = [
     {
@@ -56,9 +49,7 @@ export default function Hero() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-center space-x-3 justify-center md:justify-start">
-                    <div className="flex-shrink-0">
-                      {benefit.icon}
-                    </div>
+                    <div className="flex-shrink-0">{benefit.icon}</div>
                     <span className="text-sm md:text-base font-medium text-gray-700">{benefit.text}</span>
                   </div>
                 ))}
@@ -67,62 +58,56 @@ export default function Hero() {
           </div>
 
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-10 space-x-4">
-            {/* Get Started Button */}
-            <button 
-              onClick={handleGetStartedClick}
-              className="w-full sm:w-auto mb-4 sm:mb-0 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
+            <button
+              onClick={openGetStartedModal}
+              className="w-full sm:w-auto mb-4 sm:mb-0 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200"
+            >
               Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
             </button>
 
-            {/* Request Demo Button */}
-            <button 
-              onClick={handleRequestDemoClick}
-              className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
+            <button
+              onClick={openDemoModal}
+              className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 transition-colors duration-200"
+            >
               Request Demo <ClipboardList className="ml-2 h-5 w-5" />
             </button>
           </div>
         </div>
 
-        {/* Additional content */}
-        <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          {/* Your other sections go here */}
-        </div>
-      </div>
-
-      {/* Modal Component */}
-      {isDemoModalOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
-            <h2 className="text-lg font-semibold text-gray-900">Request a Demo</h2>
-            <p className="mt-2 text-gray-500">Fill in your details to request a demo.</p>
-            
-            {/* Demo form or other content */}
-            <form className="mt-4">
-              <input 
-                type="text" 
-                placeholder="Your Name" 
-                className="border border-gray-300 rounded-md p-2 w-full mb-2" 
-              />
-              <input 
-                type="email" 
-                placeholder="Your Email" 
-                className="border border-gray-300 rounded-md p-2 w-full mb-2" 
-              />
-              <button 
-                type="submit" 
-                className="w-full bg-blue-600 text-white rounded-md p-2 mt-4">
-                Submit
+        {/* Modal Component */}
+        {isModalOpen && (
+          <div 
+            className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center" 
+            onClick={closeModal} // Close modal when clicking outside
+          >
+            <div 
+              className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full relative"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            >
+              {/* Close button at the top */}
+              <button
+                onClick={closeModal}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                aria-label="Close modal"
+              >
+                &times;
               </button>
-            </form>
-
-            <button 
-              onClick={closeDemoModal} 
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-              Close
-            </button>
+              <h2 className="text-lg font-semibold text-gray-900">{modalTitle}</h2>
+              <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSeu_H9vLP9HZQ61KSMeoDEzmOQ-UOh6bh1AGIQlawNpEmUSPA/viewform?usp=sf_link"
+                width="100%"
+                height="500"
+                frameBorder="0"
+                marginHeight={0}
+                marginWidth={0}
+                title="Google Form"
+              >
+                Loading…
+              </iframe>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

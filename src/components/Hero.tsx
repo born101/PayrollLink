@@ -1,17 +1,27 @@
-import { ArrowRight, Shield, Database, DollarSign, CheckCircle2, Zap, Building, ClipboardList } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, CheckCircle2, Zap, Building, ClipboardList } from 'lucide-react';
 
 export default function Hero() {
-  // Define the functions to handle button clicks
+  // State to control the visibility of the demo request modal
+  const [isDemoModalOpen, setDemoModalOpen] = useState(false);
+
+  // Function to handle "Get Started" button click
   const handleGetStartedClick = () => {
     console.log("Get Started button clicked");
     // Add your desired functionality here, e.g., redirect to sign-up page
     // window.location.href = "/signup";
   };
 
+  // Function to handle "Request Demo" button click
   const handleRequestDemoClick = () => {
     console.log("Request Demo button clicked");
-    // Add your desired functionality here, e.g., open a demo request form
-    // window.location.href = "/request-demo";
+    // Open the demo request modal
+    setDemoModalOpen(true);
+  };
+
+  // Function to close the demo modal
+  const closeDemoModal = () => {
+    setDemoModalOpen(false);
   };
 
   const benefits = [
@@ -75,31 +85,44 @@ export default function Hero() {
 
         {/* Additional content */}
         <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          <div className="relative bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-            <div className="absolute -top-4 bg-blue-600 rounded-lg p-3">
-              <Shield className="h-6 w-6 text-white" />
-            </div>
-            <h3 className="mt-8 text-lg font-semibold text-gray-900">Secure Access</h3>
-            <p className="mt-2 text-gray-500">Bank-level security for sensitive payroll data with encrypted transmission.</p>
-          </div>
-
-          <div className="relative bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-            <div className="absolute -top-4 bg-blue-600 rounded-lg p-3">
-              <Database className="h-6 w-6 text-white" />
-            </div>
-            <h3 className="mt-8 text-lg font-semibold text-gray-900">Real-time Data</h3>
-            <p className="mt-2 text-gray-500">Access current employment and salary information for instant verification.</p>
-          </div>
-
-          <div className="relative bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-            <div className="absolute -top-4 bg-blue-600 rounded-lg p-3">
-              <DollarSign className="h-6 w-6 text-white" />
-            </div>
-            <h3 className="mt-8 text-lg font-semibold text-gray-900">Automated Repayments</h3>
-            <p className="mt-2 text-gray-500">Streamline collections with automated payroll deductions.</p>
-          </div>
+          {/* Your other sections go here */}
         </div>
       </div>
+
+      {/* Modal Component */}
+      {isDemoModalOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+            <h2 className="text-lg font-semibold text-gray-900">Request a Demo</h2>
+            <p className="mt-2 text-gray-500">Fill in your details to request a demo.</p>
+            
+            {/* Demo form or other content */}
+            <form className="mt-4">
+              <input 
+                type="text" 
+                placeholder="Your Name" 
+                className="border border-gray-300 rounded-md p-2 w-full mb-2" 
+              />
+              <input 
+                type="email" 
+                placeholder="Your Email" 
+                className="border border-gray-300 rounded-md p-2 w-full mb-2" 
+              />
+              <button 
+                type="submit" 
+                className="w-full bg-blue-600 text-white rounded-md p-2 mt-4">
+                Submit
+              </button>
+            </form>
+
+            <button 
+              onClick={closeDemoModal} 
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

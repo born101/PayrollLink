@@ -1,7 +1,19 @@
-import React from 'react';
 import { ArrowRight, Shield, Database, DollarSign, CheckCircle2, Zap, Building, ClipboardList } from 'lucide-react';
 
 export default function Hero() {
+  // Define the functions to handle button clicks
+  const handleGetStartedClick = () => {
+    console.log("Get Started button clicked");
+    // Add your desired functionality here, e.g., redirect to sign-up page
+    // window.location.href = "/signup";
+  };
+
+  const handleRequestDemoClick = () => {
+    console.log("Request Demo button clicked");
+    // Add your desired functionality here, e.g., open a demo request form
+    // window.location.href = "/request-demo";
+  };
+
   const benefits = [
     {
       icon: <CheckCircle2 className="h-5 w-5 text-green-500" />,
@@ -45,15 +57,23 @@ export default function Hero() {
           </div>
 
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-10 space-x-4">
-            <button className="w-full sm:w-auto mb-4 sm:mb-0 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
+            {/* Get Started Button */}
+            <button 
+              onClick={handleGetStartedClick}
+              className="w-full sm:w-auto mb-4 sm:mb-0 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
               Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
             </button>
-            <button className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
+
+            {/* Request Demo Button */}
+            <button 
+              onClick={handleRequestDemoClick}
+              className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
               Request Demo <ClipboardList className="ml-2 h-5 w-5" />
             </button>
           </div>
         </div>
 
+        {/* Additional content */}
         <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-3">
           <div className="relative bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
             <div className="absolute -top-4 bg-blue-600 rounded-lg p-3">
